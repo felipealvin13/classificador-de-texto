@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
-using ClassificadorDeTextos.IO;
-using ClassificadorDeTextos.Comparadores;
+using ClassificadorDeTextos.Model;
 
 namespace ClassificadorDeTextos
 {
@@ -9,18 +7,22 @@ namespace ClassificadorDeTextos
     {
         static void Main(string[] args)
         {
-            var modelo1 = new LeitorDeArquivos("textos/like-a-stone.txt").ExtraiModelo();
-            var modelo2 = new LeitorDeArquivos("textos/if-only-two.txt").ExtraiModelo();
+            var modelo1 = BagOfWords.DoArquivo("textos/like-a-stone.txt", "Audioslave - Like a stone");
+            var modelo2 = BagOfWords.DoArquivo("textos/if-only-two.txt");
 
-            foreach (var entrada in modelo1)
-                Console.WriteLine(entrada);
+            modelo1.ImprimiNoConsole();
+            modelo2.ImprimiNoConsole();
 
-            foreach (var entrada in modelo2)
-                Console.WriteLine(entrada);
-
-            var distancia = new ComparadorSimples().CalculaDistancia(modelo1, modelo2);
-
+            var distancia = modelo1.DistanciaAte(modelo2);
             Console.WriteLine(distancia);
+
+            var media = BagOfWords.Media(new BagOfWords[]
+            {
+                modelo1,
+                modelo2
+            }, "Média entre Audioslave e Unida");
+
+            media.ImprimiNoConsole();
         }
     }
 }

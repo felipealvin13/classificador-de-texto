@@ -26,5 +26,6 @@ namespace ClassificadorDeTextos.Comparadores
 
             return Math.Sqrt(soma);
         }
+
     }
 }
